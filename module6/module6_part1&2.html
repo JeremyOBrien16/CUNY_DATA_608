@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <title>Module 6</title>
+</head>
+
+<body>
+
+    <h1>Module 6</h1>
+
+    <h3>Part 1:  Create a function to reverse order of any word typed in</h3>
+
+    <input type="text" id="word" placeholder=" " />
+    <p>Click the "Reverse" button when ready.</p>
+    <button onclick="reverseWord()">Reverse</button>
+    <br><br>
+    <div id="reversedWord"></div>
+
+    <script>
+
+        function reverseWord() {
+            var original = document.getElementById("word").value;
+            //var reversed = original.split("").reverse().join("");
+            document.getElementById("reversedWord").innerHTML = original.split("").reverse().join("");
+        }
+
+    </script>
+
+    <br>
+    <h3>Part 2:  Create a function that takes any input number and prints the first 20 multiples in a 5 by 4 matrix</h3>
+
+    <input type="number" id="startNumber" size="4">
+    <p>Enter the Matrix...only when you are ready.</p>
+    <input type="button" value="Red Pill" onClick="makeMatrix();">
+    <br><br>
+    <div id="outputMatrix"></div>
+
+    <script>
+
+        function makeMatrix() {
+            var number = document.getElementById('startNumber').value;
+            var numberChain = Array(20).fill().map((_, i) => (+number) * (+i + 1));
+            var matrixElements = "";
+            for (var i = 0; i < numberChain.length; i++) {
+                if (i % 4 === 0) {
+                    matrixElements += "<tr><td>" + numberChain[i] + "</td>";
+                } else if (i + 1 % 4 === 0) {
+                    matrixElements += "<td>" + numberChain[i] + "</td></tr>";
+                } else {
+                    matrixElements += "<td>" + numberChain[i] + "</td>";
+                }
+            }
+            var table = '<table>' + matrixElements + '</table>';
+            var output = document.getElementById("outputMatrix");
+            output.innerHTML = table;
+        };
+
+    </script>
+
+    <br>
+    <h3>Part 3:  Load presidents.csv and display the dataset as html table using the d3 csv parser</h3>
+    
+    <p>Gave this one many**2 hours, but seems it's more javascript than I could grok in a fortnight :| </p>
+
+    <br>
+    <h3>Part 4:  Return a president's height and weight</h3>
+
+    <input type="text" id="presidentName" value="Name a president" />
+    <button onclick="lookUp()">Click here</button>
+
+    <p id="presidentHeightWeight"></p>
+    <p>Thought I had this one figured, but alas... :| </p>
+    <br><br>
+
+    <script>
+
+        function lookup() {
+            var name = document.getElementById("presidentName").value;
+            var data = d3.csv("https://raw.githubusercontent.com/JeremyOBrien16/CUNY_DATA_608/master/module6/data/presidents.csv");
+            var presidentChoice = data.filter(function (d) {
+                if (d["Name"] === name) {
+                    return d
+                }
+                document.getElementById("presidentHeightWeight").innerHTML = presidentChoice;
+            });
+        }
+
+    </script>
